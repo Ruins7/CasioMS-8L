@@ -36,7 +36,7 @@ public class CalculateType {
             case "%":
                 result = num1.divide(hundred);
                 break;
-            case "E":
+            case "√":
                 //precision:30, HALF_DOWN:Rounding mode where values are rounded towards the nearest neighbor.
                 MathContext mc = new MathContext(30, RoundingMode.HALF_DOWN);
                 result = new BigDecimal(Math.sqrt(num1.doubleValue()), mc);

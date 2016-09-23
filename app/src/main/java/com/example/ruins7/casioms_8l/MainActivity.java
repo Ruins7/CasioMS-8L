@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (operation.equals("%")) {
                 resultNum = ct.calculate(number1, number2, operation);
                 display.setText(resultNum);
-            } else if (operation.equals("E")) {
+            } else if (operation.equals("√")) {
                 resultNum = ct.calculate(number1, number2, operation);
                 display.setText(resultNum);
                 mode.setText("E");
