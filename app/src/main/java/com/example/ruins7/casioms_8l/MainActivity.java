@@ -1,11 +1,14 @@
 package com.example.ruins7.casioms_8l;
 
 import android.os.Bundle;
+import android.support.annotation.BoolRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private static String operation = "C";//current operation, the default is clear
     private static int mrcTimes = 0;//times of MRC
     private static String storeMemory = "0";//store
+    private static char point = '.';
 
     private static CalculateType ct = new CalculateType();
 
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int[] equalOperation = {R.id.equal};
     private Button[] equalButton = new Button[equalOperation.length];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,20 +85,42 @@ public class MainActivity extends AppCompatActivity {
         mode.setText("");
     }
 
+    public boolean pointExist(String inputNum){
+            Boolean exist = false;
+            char[] c = inputNum.toCharArray();
+            for (int i = 0; i < c.length; i++) {
+                if(c[i] == point) {
+                    exist = true;
+                }
+            }
+        return exist;
+    }
+
     //get input number
     class GetNumber implements OnClickListener {
 
         @Override
         public void onClick(View v) {
+            Boolean pointExist = false;
             if (operation.equals("C")) {//number1 assignment
                 if (number1.equals("0")) {
                     String text = ((Button) v).getText().toString();
-                    number1 = text;
-                    display.setText(text);
+                        number1 = text;
+                        display.setText(number1);
                 } else if (!number1.equals("0")) {
                     String text = ((Button) v).getText().toString();
-                    number1 += text;
-                    display.setText(number1);
+                    if(text.equals(".")){
+                        pointExist = pointExist(number1);
+                        if(pointExist == true){
+                            display.setText("ERROR");
+                        }else{
+                            number1 += text;
+                            display.setText(number1);
+                        }
+                    }else{
+                        number1 += text;
+                        display.setText(number1);
+                    }
                 }
             } else if (!operation.equals("C")) {//number2 assignment only +-*/
                 if (number2.equals("0")) {
@@ -102,8 +129,18 @@ public class MainActivity extends AppCompatActivity {
                     display.setText(text);
                 } else if (!number2.equals("0")) {
                     String text = ((Button) v).getText().toString();
-                    number2 += text;
-                    display.setText(number2);
+                    if(text.equals(".")){
+                        pointExist = pointExist(number2);
+                        if(pointExist == true){
+                            display.setText("ERROR");
+                        }else{
+                            number2 += text;
+                            display.setText(number2);
+                        }
+                    }else{
+                        number2 += text;
+                        display.setText(number2);
+                    }
                 }
             }
         }
